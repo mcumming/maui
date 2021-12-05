@@ -10,7 +10,7 @@ namespace Microsoft.Maui.MauiBlazorWebView.DeviceTests
 		public static async Task WaitForWebViewReady(WKWebView webview)
 		{
 			const int MaxWaitTimes = 10;
-			const int WaitTimeInMS = 2000;
+			const int WaitTimeInMS = 200;
 			await Task.Delay(5000);
 
 			for (int i = 0; i < MaxWaitTimes; i++)
@@ -18,10 +18,8 @@ namespace Microsoft.Maui.MauiBlazorWebView.DeviceTests
 				var blazorObject = await ExecuteScriptAsync(webview, "(window.Blazor !== null).toString()");
 				if (blazorObject == "true")
 				{
-					//Log.Warn("eilon", $"FOUND BLAZOBJ: {blazorObject}");
 					return;
 				}
-				//Log.Warn("blazorwebview", $"window.Blazor not found, waiting {WaitTimeInMS}ms...");
 				await Task.Delay(WaitTimeInMS);
 			}
 
@@ -39,11 +37,11 @@ namespace Microsoft.Maui.MauiBlazorWebView.DeviceTests
 		public static async Task WaitForControlDiv(WKWebView webView, string controlValueToWaitFor)
 		{
 			const int MaxWaitTimes = 10;
-			const int WaitTimeInMS = 2000;
+			const int WaitTimeInMS = 200;
 			var quotedExpectedValue = "\"" + controlValueToWaitFor + "\"";
 			for (int i = 0; i < MaxWaitTimes; i++)
 			{
-				var controlValue = await ExecuteScriptAsync(webView, "(document.getElementById('controlDiv') === null) ? null : document.getElementById('controlDiv').innerText");
+				var controlValue = await ExecuteScriptAsync(webView, "document.getElementById('controlDiv').innerText");
 				if (controlValue == quotedExpectedValue)
 				{
 					return;

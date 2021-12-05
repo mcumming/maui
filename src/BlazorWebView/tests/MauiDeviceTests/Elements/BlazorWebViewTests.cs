@@ -42,42 +42,23 @@ namespace Microsoft.Maui.MauiBlazorWebView.DeviceTests.Elements
 
 				await WebViewHelpers.WaitForWebViewReady(nativeWebView);
 
-				//				var db1 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.body.innerHTML");
+				await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "0");
 
-				//#if IOS
-				//				var z = nativeWebView.NavigationDelegate?.GetType().FullName;
-				//				var q = nativeWebView.Url?.AbsoluteString;
-				//				throw new Exception($"DB1 is: {db1}, ND={z}, URL={q}");
-				//#endif
+				var c1 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('incrementButton').click()");
 
-#if IOS
-				var b2 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "window.Blazor._internal.navigationManager.getBaseURI()");
+				await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "1");
 
+				var c2 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('incrementButton').click()");
 
-				var controlValue = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('controlDiv').innerText");
+				await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "2");
 
-				throw new Exception($"B2B2B2: {b2}, cv='{controlValue}'");
-#endif
+				var c3 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('incrementButton').click()");
 
+				await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "3");
 
-
-				//await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "0");
-
-				//var c1 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('incrementButton').click()");
-
-				//await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "1");
-
-				//var c2 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('incrementButton').click()");
-
-				//await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "2");
-
-				//var c3 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('incrementButton').click()");
-
-				//await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "3");
-
-				//var actualFinalCounterValue = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('counterValue').innerText");
-				//actualFinalCounterValue = actualFinalCounterValue.Trim('\"');
-				//Assert.Equal("3", actualFinalCounterValue);
+				var actualFinalCounterValue = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('counterValue').innerText");
+				actualFinalCounterValue = actualFinalCounterValue.Trim('\"');
+				Assert.Equal("3", actualFinalCounterValue);
 			});
 
 		}
