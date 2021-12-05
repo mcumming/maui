@@ -37,7 +37,7 @@ namespace Microsoft.Maui.MauiBlazorWebView.DeviceTests
 		public static async Task WaitForControlDiv(WKWebView webView, string controlValueToWaitFor)
 		{
 			const int MaxWaitTimes = 10;
-			const int WaitTimeInMS = 200;
+			const int WaitTimeInMS = 2000;
 			var quotedExpectedValue = "\"" + controlValueToWaitFor + "\"";
 			for (int i = 0; i < MaxWaitTimes; i++)
 			{
