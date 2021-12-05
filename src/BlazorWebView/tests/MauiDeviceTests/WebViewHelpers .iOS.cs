@@ -9,23 +9,27 @@ namespace Microsoft.Maui.MauiBlazorWebView.DeviceTests
 	{
 		public static async Task WaitForWebViewReady(WKWebView webview)
 		{
-			const int MaxWaitTimes = 10;
-			const int WaitTimeInMS = 2000;
-			for (int i = 0; i < MaxWaitTimes; i++)
-			{
-				var blazorObject = await ExecuteScriptAsync(webview, "(window.Blazor !== null).toString()");
-				if (blazorObject == "true")
-				{
-					//Log.Warn("eilon", $"FOUND BLAZOBJ: {blazorObject}");
-					return;
-				}
-				//Log.Warn("blazorwebview", $"window.Blazor not found, waiting {WaitTimeInMS}ms...");
-				await Task.Delay(WaitTimeInMS);
-			}
+			//const int MaxWaitTimes = 10;
+			//const int WaitTimeInMS = 2000;
+			await Task.Delay(5000);
+			var b1 = await ExecuteScriptAsync(webview, "window.Blazor._internal.navigationManager.getBaseURI()");
+			throw new Exception($"B1B1B1: {b1}");
 
-			var blazorObject2 = await ExecuteScriptAsync(webview, "window.Blazor === null ? 'IT IS NULL' : window.Blazor.toString()");
+			//for (int i = 0; i < MaxWaitTimes; i++)
+			//{
+			//	var blazorObject = await ExecuteScriptAsync(webview, "(window.Blazor !== null).toString()");
+			//	if (blazorObject == "true")
+			//	{
+			//		//Log.Warn("eilon", $"FOUND BLAZOBJ: {blazorObject}");
+			//		return;
+			//	}
+			//	//Log.Warn("blazorwebview", $"window.Blazor not found, waiting {WaitTimeInMS}ms...");
+			//	await Task.Delay(WaitTimeInMS);
+			//}
 
-			throw new Exception($"Waited {MaxWaitTimes * WaitTimeInMS}ms but couldn't get window.Blazor to be non-null. IsLoading={webview.IsLoading}, EstimatedProgress={webview.EstimatedProgress}, blazorObject2={blazorObject2}");
+			//var blazorObject2 = await ExecuteScriptAsync(webview, "window.Blazor === null ? 'IT IS NULL' : window.Blazor.toString()");
+
+			//throw new Exception($"Waited {MaxWaitTimes * WaitTimeInMS}ms but couldn't get window.Blazor to be non-null. IsLoading={webview.IsLoading}, EstimatedProgress={webview.EstimatedProgress}, blazorObject2={blazorObject2}");
 		}
 
 		public static async Task<string> ExecuteScriptAsync(WKWebView webview, string script)
