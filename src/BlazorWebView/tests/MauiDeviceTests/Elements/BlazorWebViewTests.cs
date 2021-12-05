@@ -44,7 +44,11 @@ namespace Microsoft.Maui.MauiBlazorWebView.DeviceTests.Elements
 
 				var db1 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.body.innerHTML");
 
-				throw new Exception($"DB1 is: {db1}");
+#if IOS
+				var z = nativeWebView.NavigationDelegate?.GetType().FullName;
+				var q = nativeWebView.Url?.AbsoluteString;
+				throw new Exception($"DB1 is: {db1}, ND={z}, URL={q}");
+#endif
 
 				//await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "0");
 
