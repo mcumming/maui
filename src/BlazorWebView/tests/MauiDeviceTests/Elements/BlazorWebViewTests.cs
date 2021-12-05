@@ -42,31 +42,31 @@ namespace Microsoft.Maui.MauiBlazorWebView.DeviceTests.Elements
 
 				await WebViewHelpers.WaitForWebViewReady(nativeWebView);
 
-				var db1 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.body.innerHTML");
+				//				var db1 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.body.innerHTML");
 
-#if IOS
-				var z = nativeWebView.NavigationDelegate?.GetType().FullName;
-				var q = nativeWebView.Url?.AbsoluteString;
-				throw new Exception($"DB1 is: {db1}, ND={z}, URL={q}");
-#endif
+				//#if IOS
+				//				var z = nativeWebView.NavigationDelegate?.GetType().FullName;
+				//				var q = nativeWebView.Url?.AbsoluteString;
+				//				throw new Exception($"DB1 is: {db1}, ND={z}, URL={q}");
+				//#endif
 
-				//await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "0");
+				await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "0");
 
-				//var c1 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('incrementButton').click()");
+				var c1 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('incrementButton').click()");
 
-				//await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "1");
+				await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "1");
 
-				//var c2 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('incrementButton').click()");
+				var c2 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('incrementButton').click()");
 
-				//await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "2");
+				await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "2");
 
-				//var c3 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('incrementButton').click()");
+				var c3 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('incrementButton').click()");
 
-				//await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "3");
+				await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "3");
 
-				//var actualFinalCounterValue = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('counterValue').innerText");
-				//actualFinalCounterValue = actualFinalCounterValue.Trim('\"');
-				//Assert.Equal("3", actualFinalCounterValue);
+				var actualFinalCounterValue = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('counterValue').innerText");
+				actualFinalCounterValue = actualFinalCounterValue.Trim('\"');
+				Assert.Equal("3", actualFinalCounterValue);
 			});
 
 		}

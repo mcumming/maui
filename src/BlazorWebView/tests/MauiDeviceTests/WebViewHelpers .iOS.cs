@@ -10,7 +10,7 @@ namespace Microsoft.Maui.MauiBlazorWebView.DeviceTests
 		public static async Task WaitForWebViewReady(WKWebView webview)
 		{
 			const int MaxWaitTimes = 10;
-			const int WaitTimeInMS = 200;
+			const int WaitTimeInMS = 2000;
 			for (int i = 0; i < MaxWaitTimes; i++)
 			{
 				var blazorObject = await ExecuteScriptAsync(webview, "(window.Blazor !== null).toString()");
