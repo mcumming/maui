@@ -7,12 +7,11 @@ namespace Microsoft.Maui.MauiBlazorWebView.DeviceTests
 {
 	public static class WebViewHelpers
 	{
+		const int MaxWaitTimes = 10;
+		const int WaitTimeInMS = 200;
+
 		public static async Task WaitForWebViewReady(WKWebView webview)
 		{
-			const int MaxWaitTimes = 10;
-			const int WaitTimeInMS = 200;
-			await Task.Delay(5000);
-
 			for (int i = 0; i < MaxWaitTimes; i++)
 			{
 				var blazorObject = await ExecuteScriptAsync(webview, "(window.Blazor !== null).toString()");
@@ -23,9 +22,7 @@ namespace Microsoft.Maui.MauiBlazorWebView.DeviceTests
 				await Task.Delay(WaitTimeInMS);
 			}
 
-			var blazorObject2 = await ExecuteScriptAsync(webview, "window.Blazor === null ? 'IT IS NULL' : window.Blazor.toString()");
-
-			throw new Exception($"Waited {MaxWaitTimes * WaitTimeInMS}ms but couldn't get window.Blazor to be non-null. IsLoading={webview.IsLoading}, EstimatedProgress={webview.EstimatedProgress}, blazorObject2={blazorObject2}");
+			throw new Exception($"Waited {MaxWaitTimes * WaitTimeInMS}ms but couldn't get window.Blazor to be non-null.");
 		}
 
 		public static async Task<string> ExecuteScriptAsync(WKWebView webview, string script)
@@ -36,20 +33,18 @@ namespace Microsoft.Maui.MauiBlazorWebView.DeviceTests
 
 		public static async Task WaitForControlDiv(WKWebView webView, string controlValueToWaitFor)
 		{
-			const int MaxWaitTimes = 10;
-			const int WaitTimeInMS = 200;
-			var quotedExpectedValue = "\"" + controlValueToWaitFor + "\"";
+			var latestControlValue = "<no value yet>";
 			for (int i = 0; i < MaxWaitTimes; i++)
 			{
-				var controlValue = await ExecuteScriptAsync(webView, "document.getElementById('controlDiv').innerText");
-				if (controlValue == quotedExpectedValue)
+				latestControlValue = await ExecuteScriptAsync(webView, "document.getElementById('controlDiv').innerText");
+				if (latestControlValue == controlValueToWaitFor)
 				{
 					return;
 				}
 				await Task.Delay(WaitTimeInMS);
 			}
 
-			throw new Exception($"Waited {MaxWaitTimes * WaitTimeInMS}ms but couldn't get controlDiv to have value '{controlValueToWaitFor}'.");
+			throw new Exception($"Waited {MaxWaitTimes * WaitTimeInMS}ms but couldn't get controlDiv to have value '{controlValueToWaitFor}'. Most recent value was '{latestControlValue}'.");
 		}
 	}
 }

@@ -42,46 +42,19 @@ namespace Microsoft.Maui.MauiBlazorWebView.DeviceTests.Elements
 
 				await WebViewHelpers.WaitForWebViewReady(nativeWebView);
 
-				await Task.Delay(5000);
-				var cv1 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('controlDiv').innerText");
-				if (cv1 != "0")
-				{
-					throw new Exception($"0000: Expected 0, but got '{cv1}'");
-				}
-				//await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "0");
+				await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "0");
 
-				await Task.Delay(5000);
 				var c1 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('incrementButton').click()");
 
-				await Task.Delay(5000);
-				var cv2 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('controlDiv').innerText");
-				if (cv2 != "1")
-				{
-					throw new Exception($"1111: Expected 1, but got '{cv2}'");
-				}
-				//await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "1");
+				await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "1");
 
-				await Task.Delay(5000);
 				var c2 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('incrementButton').click()");
 
-				await Task.Delay(5000);
-				var cv3 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('controlDiv').innerText");
-				if (cv3 != "2")
-				{
-					throw new Exception($"2222: Expected 2, but got '{cv3}'");
-				}
-				//await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "2");
+				await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "2");
 
-				await Task.Delay(5000);
 				var c3 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('incrementButton').click()");
 
-				await Task.Delay(5000);
-				var cv4 = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('controlDiv').innerText");
-				if (cv4 != "3")
-				{
-					throw new Exception($"4444: Expected 3, but got '{cv3}'");
-				}
-				//await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "3");
+				await WebViewHelpers.WaitForControlDiv(bwvHandler.NativeView, controlValueToWaitFor: "3");
 
 				var actualFinalCounterValue = await WebViewHelpers.ExecuteScriptAsync(bwvHandler.NativeView, "document.getElementById('counterValue').innerText");
 				actualFinalCounterValue = actualFinalCounterValue.Trim('\"');
@@ -100,11 +73,10 @@ namespace Microsoft.Maui.MauiBlazorWebView.DeviceTests.Elements
     <meta name=""viewport"" content=""width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"" />
     <title>Blazor app</title>
     <base href=""/"" />
-    <link href=""css/app.css"" rel=""stylesheet"" />
 </head>
 
 <body>
-	This HTML is coming from a custom provider!
+	This test HTML is coming from a custom provider!
     <div id=""app""></div>
 
     <div id=""blazor-error-ui"">
